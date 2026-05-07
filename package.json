@@ -1,0 +1,115 @@
+{
+  "name": "code-assistant-client",
+  "displayName": "code-assistant-client",
+  "description": "Cliente LSP para Code Assistant",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.116.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onLanguage:python"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "code-assistant.explain",
+        "title": "💡 Explicar código (Code Assistant)"
+      },
+      {
+        "command": "code-assistant.fixBug",
+        "title": "🔧 Fix bug (Code Assistant)"
+      },
+      {
+        "command": "code-assistant.generateTests",
+        "title": "🧪 Generar tests (Code Assistant)"
+      },
+      {
+        "command": "code-assistant.complete",
+        "title": "✨ Autocompletar (Code Assistant)"
+      },
+      {
+        "command": "code-assistant.search",
+        "title": "🔍 Buscar (Code Assistant)"
+      },
+      {
+        "command": "code-assistant.generate",
+        "title": "🤖 Generar código (Code Assistant)"
+      },
+      {
+        "command": "code-assistant.clearMemory",
+        "title": "🧹 Limpiar memoria (Code Assistant)"
+      },
+      {
+        "command": "code-assistant.indexWorkspace",
+        "title": "📚 Indexar workspace (Code Assistant)"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "code-assistant.explain",
+        "key": "ctrl+k alt+e",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "code-assistant.fixBug",
+        "key": "ctrl+k alt+f",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "code-assistant.generateTests",
+        "key": "ctrl+k alt+t",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "code-assistant.complete",
+        "key": "ctrl+k alt+c",
+        "when": "editorTextFocus && editorLangId == 'python'"
+      },
+      {
+        "command": "code-assistant.search",
+        "key": "ctrl+k alt+s",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "code-assistant.generate",
+        "key": "ctrl+k alt+g",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "code-assistant.clearMemory",
+        "key": "ctrl+k alt+l",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "code-assistant.indexWorkspace",
+        "key": "ctrl+k alt+i",
+        "when": "editorTextFocus"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.10",
+    "@types/node": "22.x",
+    "@types/vscode": "^1.116.0",
+    "@vscode/test-cli": "^0.0.12",
+    "@vscode/test-electron": "^2.5.2",
+    "eslint": "^9.39.3",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.56.1"
+  },
+  "dependencies": {
+    "vscode-languageclient": "^9.0.1"
+  }
+}

@@ -1,0 +1,28 @@
+# Dependencies
+node_modules/
+
+# Compiled output
+out/
+
+# VS Code
+.vscode/
+
+# Environment
+.env
+
+# Logs
+*.log
+
+# TypeScript
+*.js.map
+
+# Extension package
+*.vsix
+
+# Test
+src/test/
+.vscode-test.mjs
+
+# Boilerplate innecesario
+vsc-extension-quickstart.md
+CHANGELOG.md
