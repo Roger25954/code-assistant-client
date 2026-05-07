@@ -1,71 +1,104 @@
-# code-assistant-client README
+# 🤖 Code Assistant — Cliente VS Code
 
-This is the README for your extension "code-assistant-client". After writing up a brief description, we recommend including the following sections.
-
-## Features
-
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
-
-For example if there is an image subfolder under your extension project workspace:
-
-\!\[feature X\]\(images/feature-x.png\)
-
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
-
-## Requirements
-
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
-
-## Extension Settings
-
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
-
-For example:
-
-This extension contributes the following settings:
-
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
-
-## Known Issues
-
-Calling out known issues can help limit users opening duplicate issues against your extension.
-
-## Release Notes
-
-Users appreciate release notes as you update your extension.
-
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
+Extensión de VS Code que conecta el editor con el servidor LSP de Code Assistant, un asistente de código con IA construido con LangGraph, Groq, Gemini y ChromaDB.
 
 ---
 
-## Following extension guidelines
+## ✨ Features
 
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
+### Autocompletado inteligente — `Ctrl+K → Alt+C`
+Sugerencias de código bajo demanda basadas en el contexto del archivo actual.
 
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
+### Explicación de código — `Ctrl+K → Alt+E`
+Selecciona cualquier fragmento y obtén una explicación clara en español.
 
-## Working with Markdown
+### Fix de bugs — `Ctrl+K → Alt+F`
+Selecciona el código con el error y el agente lo corrige automáticamente.
 
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
+### Generación de tests — `Ctrl+K → Alt+T`
+Genera tests completos con pytest para cualquier función o clase.
 
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
+### Búsqueda web — `Ctrl+K → Alt+S`
+Busca documentación y soluciones con Tavily. El resultado se sintetiza con Groq.
 
-## For more information
+### Generación de código — `Ctrl+K → Alt+G`
+Escribe una instrucción en lenguaje natural. El agente LangGraph decide qué tools usar:
+- Consulta el codebase del proyecto (RAG) si la instrucción referencia algo existente
+- Busca documentación externa si necesita info adicional
+- Ejecuta el código en Docker para verificar
+- Corrige automáticamente si hay errores
 
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
+### RAG sobre codebase — `Ctrl+K → Alt+I`
+Indexa todos los `.py` del workspace en ChromaDB. Los archivos también se indexan automáticamente al abrirlos o modificarlos.
 
-**Enjoy!**
+### Limpiar memoria — `Ctrl+K → Alt+L`
+Resetea el historial conversacional del archivo actual.
+
+---
+
+## ⌨️ Atajos de teclado
+
+| Atajo | Acción |
+|---|---|
+| `Ctrl+K → Alt+C` | Autocompletar código |
+| `Ctrl+K → Alt+E` | Explicar código seleccionado |
+| `Ctrl+K → Alt+F` | Fix de bugs |
+| `Ctrl+K → Alt+T` | Generar tests |
+| `Ctrl+K → Alt+S` | Buscar documentación |
+| `Ctrl+K → Alt+G` | Generar código |
+| `Ctrl+K → Alt+L` | Limpiar memoria |
+| `Ctrl+K → Alt+I` | Indexar workspace en RAG |
+
+---
+
+## 📋 Requisitos
+
+Esta extensión requiere que el servidor LSP esté corriendo. Consulta el repositorio principal para la instalación completa:
+
+- Python 3.11+ con el entorno `code-assistant` configurado
+- Docker Desktop corriendo (ChromaDB + sandbox de ejecución)
+- API Keys de Groq, Gemini y Tavily en el archivo `.env`
+
+Repositorio del servidor: [Code-Assistant](https://github.com/Roger25954/Code-Assistant)
+
+---
+
+## ⚙️ Configuración
+
+Antes de usar la extensión, actualiza las rutas en `src/extension.ts`:
+
+```typescript
+const serverOptions: ServerOptions = {
+    command: 'RUTA_A_TU_PYTHON',
+    // Windows Anaconda: C:\\Users\\TU_USUARIO\\anaconda3\\envs\\code-assistant\\python.exe
+    // Mac/Linux:        /home/TU_USUARIO/anaconda3/envs/code-assistant/bin/python
+    args: ['RUTA_COMPLETA_A/Code Assistant/server.py']
+};
+```
+
+---
+
+## 🚀 Instalación
+
+```bash
+cd code-assistant-client
+npm install
+npm run compile
+npx vsce package
+code --install-extension code-assistant-client-0.0.1.vsix
+```
+
+---
+
+## 📝 Notas
+
+- Docker Desktop debe estar corriendo antes de usar la extensión
+- ChromaDB debe estar levantado: `docker run -d -p 8000:8000 --name chromadb chromadb/chroma`
+- El entorno Anaconda `code-assistant` debe estar activo en el servidor
+
+---
+
+## 📄 Release Notes
+
+### 0.0.1
+Release inicial — autocompletado, explicación, fix, tests, búsqueda web, generación de código con agente LangGraph y RAG sobre codebase.
